@@ -78,6 +78,9 @@ export function SignInForm(): React.JSX.Element {
           <Link component={RouterLink} href={paths.auth.signUp} underline="hover" variant="subtitle2">
             Sign up
           </Link>
+          <Link component={RouterLink} href={paths.auth.oauth} underline="hover" variant="subtitle2">
+            Oauthhh
+          </Link>
         </Typography>
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
