@@ -1,7 +1,8 @@
-"use server";
+'use server';
 
-import { createSupabaseServerClient } from "../supabase/server";
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore } from 'next/cache';
+
+import { createSupabaseServerClient } from '../supabase/server';
 
 export async function readUserSession() {
   noStore();

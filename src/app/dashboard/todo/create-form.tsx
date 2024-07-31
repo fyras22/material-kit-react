@@ -1,7 +1,8 @@
 'use client';
 
-import { useTransition } from 'react';
+import React, { useTransition } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import * as z from 'zod';
@@ -16,49 +17,63 @@ import { createTodo } from './actions';
 
 const FormSchema = z.object({
   title: z.string().min(1, {
-    message: 'Password is required.',
+    message: 'Title is required.',
   }),
 });
 
-export default function CreateForm() {
+type FormSchemaType = z.infer<typeof FormSchema>;
+
+function CreateForm() {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: '',
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
     startTransition(async () => {
-      const result = await createTodo(data.title, window.location.host);
+      try {
+        const result = await createTodo(data.title, window.location.host);
 
-      const { error, data: todo } = JSON.parse(result);
+        const parsedResult = JSON.parse(result) as { error?: { message: string }; data?: { title: string } };
 
-      if (error?.message) {
+        if (parsedResult.error?.message) {
+          toast({
+            variant: 'destructive',
+            title: 'Failed to create todo',
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{parsedResult.error.message}</code>
+              </pre>
+            ),
+          });
+        } else if (parsedResult.data) {
+          toast({
+            title: 'Todo created successfully.',
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{parsedResult.data.title} is created</code>
+              </pre>
+            ),
+          });
+          form.reset();
+        }
+      } catch (error) {
         toast({
           variant: 'destructive',
-          title: 'Fail to create todo',
+          title: 'Failed to create todo',
           description: (
             <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{error.message}</code>
+              <code className="text-white">An unexpected error occurred.</code>
             </pre>
           ),
         });
-      } else {
-        toast({
-          title: 'You are successfully create todo.',
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{data.title} is created</code>
-            </pre>
-          ),
-        });
-        form.reset();
       }
     });
-  }
+  };
 
   return (
     <Form {...form}>
@@ -70,7 +85,7 @@ export default function CreateForm() {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="todo title" {...field} onChange={field.onChange} />
+                <Input placeholder="todo title" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,3 +100,5 @@ export default function CreateForm() {
     </Form>
   );
 }
+
+export default CreateForm;

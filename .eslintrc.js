@@ -57,6 +57,25 @@ module.exports = {
     ],
 
     // Deactivated
+    'unicorn/filename-case': 'off',
+    camelcase: 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    'no-implicit-coercion': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/restrict-plus-operands': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/no-unnecessary-template-expression': 'off',
+    '@typescript-eslint/naming-convention': 'off',
+    '@typescript-eslint/no-shadow': 'off',
+    '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/consistent-type-imports': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-confusing-void-expression': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/dot-notation': 'off', // paths are used with a dot notation
     '@typescript-eslint/no-misused-promises': 'off', // onClick with async fails
     '@typescript-eslint/no-non-null-assertion': 'off', // sometimes compiler is unable to detect

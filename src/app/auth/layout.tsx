@@ -8,7 +8,7 @@ export default async function layout({ children }: { children: React.ReactNode }
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  console.log('🚀 ~ layout ~ session:', session);
+
   if (session) {
     redirect('/dashboard');
   }
