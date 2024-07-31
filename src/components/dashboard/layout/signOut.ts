@@ -12,5 +12,5 @@ export async function signOut() {
     return { error };
   }
 
-  redirect('auth/oauth');
+  redirect('/');
 }
