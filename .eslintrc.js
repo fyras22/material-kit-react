@@ -57,6 +57,9 @@ module.exports = {
     ],
 
     // Deactivated
+    '@typescript-eslint/no-useless-template-literals': 'off',
+    'no-useless-return': 'off',
+    '@typescript-eslint/no-useless-template-literal': 'off',
     'unicorn/filename-case': 'off',
     camelcase: 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
