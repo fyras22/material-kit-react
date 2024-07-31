@@ -14,7 +14,7 @@ import { User as UserIcon } from '@phosphor-icons/react/dist/ssr/User';
 import { paths } from '@/paths';
 import { logger } from '@/lib/default-logger';
 
-import { signOut } from './SignOut';
+import { signOut } from './signOut';
 
 export interface UserPopoverProps {
   anchorEl: Element | null;
