@@ -18,7 +18,7 @@ export default async function Layout({ children }: LayoutProps) {
     data: { session },
   } = await supabase.auth.getSession();
   if (!session) {
-    redirect('/auth/oauth');
+    redirect('/oauth');
   }
   return (
     <>
