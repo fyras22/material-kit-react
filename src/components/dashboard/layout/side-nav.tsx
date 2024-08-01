@@ -52,7 +52,7 @@ export function SideNav(): React.JSX.Element {
     >
       <Stack spacing={2} sx={{ p: 3 }}>
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          <Logo color="light" height={32} width={122} />
+          {/* <Logo color="light" height={32} width={122} /> */}
         </Box>
         <Box
           sx={{
@@ -70,7 +70,7 @@ export function SideNav(): React.JSX.Element {
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Devias
+              Nasco
             </Typography>
           </Box>
           <CaretUpDownIcon />
@@ -84,10 +84,10 @@ export function SideNav(): React.JSX.Element {
       <Stack spacing={2} sx={{ p: '12px' }}>
         <div>
           <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
-            Need more features?
+            Need more control?
           </Typography>
           <Typography color="var(--mui-palette-neutral-400)" variant="body2">
-            Check out our Pro solution template.
+            Check out our Pro Plans.
           </Typography>
         </div>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -102,7 +102,7 @@ export function SideNav(): React.JSX.Element {
           component="a"
           endIcon={<ArrowSquareUpRightIcon fontSize="var(--icon-fontSize-md)" />}
           fullWidth
-          href="https://material-kit-pro-react.devias.io/"
+          // href="https://material-kit-pro-react.devias.io/"
           sx={{ mt: 2 }}
           target="_blank"
           variant="contained"

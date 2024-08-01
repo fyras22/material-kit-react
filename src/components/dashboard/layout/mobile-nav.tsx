@@ -59,7 +59,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
     >
       <Stack spacing={2} sx={{ p: 3 }}>
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          <Logo color="light" height={32} width={122} />
+          {/* <Logo color="light" height={32} width={122} /> */}
         </Box>
         <Box
           sx={{
@@ -77,7 +77,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Devias
+              Nasco
             </Typography>
           </Box>
           <CaretUpDownIcon />
@@ -109,7 +109,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
           component="a"
           endIcon={<ArrowSquareUpRightIcon fontSize="var(--icon-fontSize-md)" />}
           fullWidth
-          href="https://material-kit-pro-react.devias.io/"
+          // href="https://material-kit-pro-react.devias.io/"
           sx={{ mt: 2 }}
           target="_blank"
           variant="contained"
