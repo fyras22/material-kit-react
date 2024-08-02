@@ -52,7 +52,8 @@ export function SideNav(): React.JSX.Element {
     >
       <Stack spacing={2} sx={{ p: 3 }}>
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          {/* <Logo color="light" height={32} width={122} /> */}
+          <Logo color="light" height={55} width={60} />
+          <Box alt="logo" component="img" height={65} src="/assets/name.svg" width={130} />
         </Box>
         <Box
           sx={{

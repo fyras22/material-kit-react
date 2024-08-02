@@ -59,7 +59,8 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
     >
       <Stack spacing={2} sx={{ p: 3 }}>
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          {/* <Logo color="light" height={32} width={122} /> */}
+          <Logo color="light" height={49} width={55} />
+          <Box alt="logo" component="img" height={55} src="/assets/name.svg" width={130} />
         </Box>
         <Box
           sx={{
