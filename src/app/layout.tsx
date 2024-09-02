@@ -17,7 +17,12 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body>
-        <script src="https://integrated666.netlify.app/assets/integration.js"></script>
+        <script
+          type="module"
+          id="integrationScript"
+          accessKey="hahahhahahasecrett"
+          src="https://nasco-integration.vercel.app/assets/integrations.js"
+        ></script>
         <LocalizationProvider>
           <UserProvider>
             <ThemeProvider>{children}</ThemeProvider>
