@@ -6,22 +6,70 @@ import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ArrowSquareUpRight as ArrowSquareUpRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowSquareUpRight';
-import { CaretUpDown as CaretUpDownIcon } from '@phosphor-icons/react/dist/ssr/CaretUpDown';
+import { CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons';
 
 import type { NavItemConfig } from '@/types/nav';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
 import { Logo } from '@/components/core/logo';
 
+import { readTodo } from './actions';
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
 
 export function SideNav(): React.JSX.Element {
   const pathname = usePathname();
+  const [workspaces, setWorkspaces]: any[] = React.useState([]);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedWorkspace, setSelectedWorkspace] = React.useState<string>('');
 
+  React.useEffect(() => {
+    const fetchWorkspaces = async () => {
+      const { data: workspaces, error } = await readTodo();
+      if (error) {
+        console.error(error, 'errrr');
+      } else {
+        setWorkspaces(workspaces);
+        if (workspaces.length > 0) {
+          setSelectedWorkspace(workspaces[0].name); // Set the first workspace as the default
+        }
+      }
+    };
+
+    fetchWorkspaces().catch((error) => {
+      console.error('Failed to fetch workspaces:', error);
+    });
+  }, []);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSelect = (workspace: string) => {
+    setSelectedWorkspace(workspace);
+    handleClose();
+  };
+
+  const handleUpClick = () => {
+    const currentIndex = workspaces.findIndex((ws: { name: string }) => ws.name === selectedWorkspace);
+    const previousIndex = (currentIndex - 1 + workspaces.length) % workspaces.length;
+    setSelectedWorkspace(workspaces[previousIndex].name);
+  };
+
+  const handleDownClick = () => {
+    const currentIndex = workspaces.findIndex((ws: { name: string }) => ws.name === selectedWorkspace);
+    const nextIndex = (currentIndex + 1) % workspaces.length;
+    setSelectedWorkspace(workspaces[nextIndex].name);
+  };
   return (
     <Box
       sx={{
@@ -71,11 +119,21 @@ export function SideNav(): React.JSX.Element {
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Nasco
+              {selectedWorkspace}
             </Typography>
           </Box>
-          <CaretUpDownIcon />
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <CaretUpIcon onClick={handleUpClick} />
+            <CaretDownIcon onClick={handleDownClick} />
+          </Box>
         </Box>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+          {workspaces.map((workspace: any) => (
+            <MenuItem key={workspace.id} onClick={() => handleSelect(workspace.name)}>
+              {workspace.name}
+            </MenuItem>
+          ))}
+        </Menu>
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Box component="nav" sx={{ flex: '1 1 auto', p: '12px' }}>
@@ -103,12 +161,12 @@ export function SideNav(): React.JSX.Element {
           component="a"
           endIcon={<ArrowSquareUpRightIcon fontSize="var(--icon-fontSize-md)" />}
           fullWidth
-          // href="https://material-kit-pro-react.devias.io/"
+          href="https://material-kit-pro-react.devias.io/"
           sx={{ mt: 2 }}
           target="_blank"
           variant="contained"
         >
-          Pro version
+          Nasco Premium
         </Button>
       </Stack>
     </Box>

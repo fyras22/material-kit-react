@@ -102,5 +102,7 @@ module.exports = {
     '@next/next/no-img-element': 'off', // Temporary disabled
     'react/no-unknown-property': 'off',
     'jsx-a11y/no-access-key': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    'no-console': 'off',
   },
 };

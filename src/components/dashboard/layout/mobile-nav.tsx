@@ -78,7 +78,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Nasco
+              Nascoe
             </Typography>
           </Box>
           <CaretUpDownIcon />
