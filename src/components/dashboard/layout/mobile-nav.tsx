@@ -10,13 +10,14 @@ import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ArrowSquareUpRight as ArrowSquareUpRightIcon } from '@phosphor-icons/react/dist/ssr/ArrowSquareUpRight';
-import { CaretUpDown as CaretUpDownIcon } from '@phosphor-icons/react/dist/ssr/CaretUpDown';
+import { CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons';
 
 import type { NavItemConfig } from '@/types/nav';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
 import { Logo } from '@/components/core/logo';
 
+import { readTodo } from './actions';
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
 
@@ -28,7 +29,52 @@ export interface MobileNavProps {
 
 export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
   const pathname = usePathname();
+  const [workspaces, setWorkspaces]: any[] = React.useState([]);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedWorkspace, setSelectedWorkspace] = React.useState<string>('');
 
+  React.useEffect(() => {
+    const fetchWorkspaces = async () => {
+      const { data: workspaces, error } = await readTodo();
+      if (error) {
+        console.error(error, 'errrr');
+      } else {
+        setWorkspaces(workspaces);
+        if (workspaces.length > 0) {
+          setSelectedWorkspace(workspaces[0].name); // Set the first workspace as the default
+        }
+      }
+    };
+
+    fetchWorkspaces().catch((error) => {
+      console.error('Failed to fetch workspaces:', error);
+    });
+  }, []);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSelect = (workspace: string) => {
+    setSelectedWorkspace(workspace);
+    handleClose();
+  };
+
+  const handleUpClick = () => {
+    const currentIndex = workspaces.findIndex((ws: { name: string }) => ws.name === selectedWorkspace);
+    const previousIndex = (currentIndex - 1 + workspaces.length) % workspaces.length;
+    setSelectedWorkspace(workspaces[previousIndex].name);
+  };
+
+  const handleDownClick = () => {
+    const currentIndex = workspaces.findIndex((ws: { name: string }) => ws.name === selectedWorkspace);
+    const nextIndex = (currentIndex + 1) % workspaces.length;
+    setSelectedWorkspace(workspaces[nextIndex].name);
+  };
   return (
     <Drawer
       PaperProps={{
@@ -78,10 +124,13 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Nascoe
+              {selectedWorkspace}
             </Typography>
           </Box>
-          <CaretUpDownIcon />
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <CaretUpIcon onClick={handleUpClick} />
+            <CaretDownIcon onClick={handleDownClick} />
+          </Box>
         </Box>
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
@@ -115,7 +164,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
           target="_blank"
           variant="contained"
         >
-          Pro version
+          Nasco Premium
         </Button>
       </Stack>
     </Drawer>
